@@ -8,6 +8,7 @@ public class DAOTester {
 	public static void main(String args[]) {
 		FilmDAO dao = new FilmDAO();
 		Film film = new Film("The lost coder", "Test", "Test", "test", 0);
+		Film filmOne = new Film(0, "", null, null, null, 0);
 		ArrayList<Film> fList = new ArrayList<Film>();
 		
 		fList = dao.getFilm("War");

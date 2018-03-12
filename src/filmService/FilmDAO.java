@@ -130,7 +130,7 @@ public class FilmDAO {
 		return rowsAffected;
 	}
 
-	// DELETE FILM - UNTESTED 21/02
+	// DELETE FILM - TESTED WORKING
 	public void deleteFilm(String title) throws SQLException {
 		PreparedStatement pstmt = null;
 
@@ -156,4 +156,44 @@ public class FilmDAO {
 
 // UPDATE FILM - UNTESTED 21/02
 
+	public int updateFilm(Film film) {
+		int rowsAffected = 0;
+		PreparedStatement pstmt = null;
+
+		String updateSqlStmt = "UPDATE films SET title = ?, director = ?, stars = ?, review = ?, year = ? WHERE id = ?";
+
+		try {
+			openConnection();
+			pstmt = conn.prepareStatement(updateSqlStmt);
+
+			pstmt.setString(1, film.getTitle());
+			pstmt.setString(2, film.getDirector());
+			pstmt.setString(3, film.getStars());
+			pstmt.setString(4, film.getReview());
+			pstmt.setInt(5, film.getYear());
+			pstmt.setInt(6, film.getId());		
+			rowsAffected = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		System.out.println(rowsAffected);
+		return rowsAffected;
+	}
 }
