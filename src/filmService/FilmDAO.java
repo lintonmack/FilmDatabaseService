@@ -53,7 +53,7 @@ public class FilmDAO {
 		ArrayList<Film> allFilms = new ArrayList<Film>();
 		openConnection();
 		try {
-			String selectAllFilms = "select * from films";
+			String selectAllFilms = "select * from films\n";
 			ResultSet rs = stmt.executeQuery(selectAllFilms);
 			while (rs.next()) {
 				oneFilm = getNextFilm(rs);
@@ -72,7 +72,7 @@ public class FilmDAO {
 	public ArrayList<Film> getFilm(String title) {
 		ArrayList<Film> film = new ArrayList<Film>();
 			String selectFilm = "SELECT * FROM films WHERE title LIKE ";
-			String appendFilm = "'%" + title + "%'";
+			String appendFilm = "'%" + title + "%'\n";
 			String selectFilmSQL = selectFilm + appendFilm;
 			
 			System.out.println(selectFilmSQL);
@@ -134,7 +134,7 @@ public class FilmDAO {
 	public void deleteFilm(String title) throws SQLException {
 		PreparedStatement pstmt = null;
 
-		String deleteSqlStmt = "DELETE FROM films WHERE title = ?";
+		String deleteSqlStmt = "DELETE FROM films WHERE title = ?\n";
 
 		try {
 			openConnection();
@@ -160,7 +160,7 @@ public class FilmDAO {
 		int rowsAffected = 0;
 		PreparedStatement pstmt = null;
 
-		String updateSqlStmt = "UPDATE films SET title = ?, director = ?, stars = ?, review = ?, year = ? WHERE id = ?";
+		String updateSqlStmt = "UPDATE films SET title = ?, director = ?, stars = ?, review = ?, year = ? WHERE id = ?\n";
 
 		try {
 			openConnection();
