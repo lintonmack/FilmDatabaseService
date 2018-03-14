@@ -1,6 +1,11 @@
 	// INSERT FILM METHOD
 $(document).ready(function(){
 		$("#insertFilm").click(function(e){
+			if($('#insertTitle').val() === '' || $('#insertDirector').val() === '' || $('#insertStars').val() === '' || $('#insertReview').val() === '' || $('#insertYear').val() === '') {
+				$('#insertUpdate').html('>> Missing Data <<');
+				e.preventDefault();
+				return;
+			} else {
 			var xhr = new XMLHttpRequest();
 			var title, director, stars, review, year;
 			e.preventDefault();
@@ -12,12 +17,18 @@ $(document).ready(function(){
 			$('#insertUpdate').html('Film Added to the database!');
 			xhr.open('GET', 'InsertFilm?title=' + title + '&director=' + director + '&stars=' + stars + '&review=' + review + '&year=' + year, true);
 			xhr.send();
+			}
 		})
 	})
 	
 	// UPDATE FILM METHOD
 $(document).ready(function(){
 		$("#updateFilm").click(function(e){
+			if($('#updateTitle').val() === '' || $('#updateId').val() === '' || $('#updateDirector').val() === '' || $('#updateStars').val() === '' || $('#updateReview').val() === '' || $('#updateYear').val() === '') {
+				$('#insertUpdate').html('>> Missing Data <<');
+				e.preventDefault();
+				return;
+			} else {
 			var xhr = new XMLHttpRequest();
 			var id, title, director, stars, review, year;
 			e.preventDefault();
@@ -30,9 +41,31 @@ $(document).ready(function(){
 			$('#insertUpdate').html('Film Updated in Database!');
 			xhr.open('GET', 'UpdateFilm?title=' + title + '&director=' + director + '&stars=' + stars + '&review=' + review + '&year=' + year + '&id=' + id, true);
 			xhr.send();
+			}
+		})
+	})	
+	
+	// DELETE FILM
+	$(document).ready(function(){
+		$("#deleteFilm").click(function(e){
+			if($('#deleteTitle').val() === '') {
+				$('#insertUpdate').html('>> Missing Data <<');
+				e.preventDefault();
+				return;
+			} else {
+			title = $("#deleteTitle").val(); 
+			console.log(">" + title + "<");
+			var xhr = new XMLHttpRequest();
+			var title;
+			e.preventDefault();
+			$('#insertUpdate').html('Film Deleted from Database!');
+			xhr.open('GET', 'DeleteFilm?title=' + title, true);
+			xhr.send();
+			}
 		})
 	})	
 
+	//GET ALL FILMS TEXT 
 $(document).ready(function(){
 		$("#getAllFilmsText").click(function(){
 			var xhr = new XMLHttpRequest();
@@ -55,8 +88,8 @@ $(document).ready(function(){
 							film_data += '</tr>';
 						}
 						film_data += '</table>';
+						$('#insertUpdate').html('Get Query Successfully Executed');
 						$('#table_body').html(film_data);
-
 				}
 			};
 			xhr.open('GET', 'GetFilms?format=text', true);
@@ -64,8 +97,14 @@ $(document).ready(function(){
 		})
 	})
 	
+	//SEACH FOR A SPECIFIC FILM(S) TEXT
 	$(document).ready(function(){
 		$("#searchForAFilmText").click(function(e){
+			if($('#setFilm').val() === '') {
+				$('#insertUpdate').html('>> Missing Data <<');
+				e.preventDefault();
+				return;
+			} else {
 			var filmSearch = $("#setFilm").val(); 
 			var xhr = new XMLHttpRequest();
 			console.log(filmSearch);
@@ -93,15 +132,17 @@ $(document).ready(function(){
 							
 						}
 						film_data += '</table>';
+						$('#insertUpdate').html('Get Query Successfully Executed');
 						$('#table_body').html(film_data);
-
 				}
 			};
 			xhr.open('GET', 'GetAFilm?format=text&title=' + filmSearch, true);
 			xhr.send(null);
+			}
 		})
 	})
 	
+	//GET ALL FILMS JSON
 	$(document).ready(function(){
 		$("#getAllFilmsJson").click(function(){
 			var film_data = '';
@@ -120,6 +161,7 @@ $(document).ready(function(){
 						film_data += '<td>' + value.year + '</td>';
 						film_data += '</tr>';
 					});
+					$('#insertUpdate').html('Get Query Successfully Executed');
 					$("#table_body").html(film_data);
 				},
 				error: function(jqHXR, textStatus, errorThrown){
@@ -130,9 +172,14 @@ $(document).ready(function(){
 		});
 	}); 
 	 
-	
+	// SEARCH FOR A SPECIFIC(S) FILM JSON
 	$(document).ready(function(){
 		   $('#searchForAFilmJson').click(function(e){ 
+					if($('#setFilm').val() === '') {
+						$('#insertUpdate').html('>> Missing Data <<');
+						e.preventDefault();
+						return;
+					} else {
 			   var filmSearch = $("#setFilm").val(); 
 				 console.log(filmSearch); 
 			    var film_data = '';
@@ -153,6 +200,7 @@ $(document).ready(function(){
 						film_data += '<td>' + value.year + '</td>';
 						film_data += '</tr>';
 					});
+					$('#insertUpdate').html('Get Query Successfully Executed');
 					$("#table_body").html(film_data);
 				},
 				error: function(jqHXR, textStatus, errorThrown){
@@ -160,9 +208,11 @@ $(document).ready(function(){
 					console.log("Error: " + errorThrown)
 				}
 			});
+					}
 			}); 
 		}); 
 	
+	// GET ALL FILMS XML
 	$(document).ready(function(){
 		$("#getAllFilmsXML").click(function(){
 			/* $.ajax({ */
@@ -206,6 +256,7 @@ $(document).ready(function(){
 						function getNodeValue(obj, tag){
 							return obj.getElementsByTagName(tag)[0].firstChild.nodeValue;
 						}
+						$('#insertUpdate').html('Get Query Successfully Executed');
 					}
 				};
 				xhr.open('GET', 'GetFilms?format=xml', true);
@@ -213,9 +264,14 @@ $(document).ready(function(){
 		})
 	})
 	
-	
+	// SEARCH FOR A SPECIFIC FILM(S) XML
 	$(document).ready(function(){
 		$("#searchForAFilmXml").click(function(e){
+				if($('#setFilm').val() === '') {
+					$('#insertUpdate').html('>> Missing Data <<');
+					e.preventDefault();
+					return;
+				} else {
 			/* $.ajax({ */
 				e.preventDefault();
 
@@ -259,9 +315,11 @@ $(document).ready(function(){
 						function getNodeValue(obj, tag){
 							return obj.getElementsByTagName(tag)[0].firstChild.nodeValue;
 						}
+					$('#insertUpdate').html('Get Query Successfully Executed');
 					}
 				};
 				xhr.open('GET', 'GetAFilm?format=xml&title=' + filmSearch, true);
 				xhr.send(null);
+				}
 		})
 	})
